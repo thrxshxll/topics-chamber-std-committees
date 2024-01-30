@@ -16,7 +16,7 @@ def apply_vectorization(data, content_header, vocabulary=None,
                                  tokenizer=(lambda x: x))
 
     term_frequency = vectorizer.fit_transform(content)
-    features = np.array(vectorizer.get_feature_names())
+    features = np.array(vectorizer.get_feature_names_out())
 
     if save_vocab_as:
         path = f'models/{save_vocab_as}.csv'
