@@ -37,13 +37,13 @@ document_topics = toolkit.apply_lda_model(model=model,
                                           term_frequency=tf_matrix,
                                           id_header=['speaker', 'event_id'],
                                           identifiers=identifiers,
-                                          save_as='deputy-topic-distribution')
+                                          save_as='lda_topics_deputies/deputy-topic-distribution')
 
 print('\nApplying UMAP for dimension reduction of topic distribution...')
 doc_topic_distribution = document_topics.copy().iloc[:, 2:]
 toolkit.apply_umap_model(values=doc_topic_distribution,
                          id_header=['speaker', 'event_id'],
                          identifiers=identifiers, n_components=2,
-                         save_as='umap-deputy-topic-distribution')
+                         save_as='lda_topics_deputies/umap-deputy-topic-distribution')
 
 print('\nDone!')

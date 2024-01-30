@@ -44,7 +44,7 @@ document_topics = toolkit.apply_lda_model(model=model,
                                           id_header='event_id',
                                           identifiers=identifiers)
 
-save_as = 'data/ready/event-topic-distribution-2021.csv'
+save_as = 'data/ready/lda_topics_events_2021/event-topic-distribution-2021.csv'
 document_topics = pd.merge(event_metadata, document_topics, on='event_id')
 document_topics.to_csv(save_as, index=False)
 

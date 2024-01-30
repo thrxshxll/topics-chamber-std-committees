@@ -22,7 +22,7 @@ stopwords = stopwords['word'].tolist()
 print('\nExtracting metadata...')
 data['month'] = data['date'].apply(toolkit.get_month_from_date)
 toolkit.extract_metadata(data=data, columns=METADATA_COLUMNS,
-                         save_as='metadata')
+                         save_as='lda_topics_events/metadata')
 
 print('\nApplying tokenization...')
 data = toolkit.apply_tokenization(data=data, content_header='content',
@@ -42,9 +42,9 @@ tf_matrix, features = toolkit.apply_vectorization(data=data,
 print('\nEvaluating parameters for Latent Dirichlet Allocation model...')
 model = toolkit.evaluate_lda_model(term_fequency=tf_matrix, words=features,
                                    parameters=GRID_PARAMETERS,
-                                   save_evaluation_as='model-evaluation',
+                                   save_evaluation_as='lda_topics_events/model-evaluation',
                                    save_model_as='lda-standing-committees',
-                                   save_words_as='topics-main-words')
+                                   save_words_as='lda_topics_events/topics-main-words')
 
 print('\nApplying best Latent Dirichlet Allocation model to data...')
 identifiers = data['event_id'].tolist()
@@ -52,17 +52,17 @@ document_topics = toolkit.apply_lda_model(model=model,
                                           term_frequency=tf_matrix,
                                           id_header='event_id',
                                           identifiers=identifiers,
-                                          save_as='event-topic-distribution')
+                                          save_as='lda_topics_events/event-topic-distribution')
 
 print('\nApplying UMAP for dimension reduction of term frequency...')
 toolkit.apply_umap_model(values=tf_matrix, id_header='event_id',
                          identifiers=identifiers, n_components=2,
-                         save_as='umap-term-frequency')
+                         save_as='lda_topics_events/umap-term-frequency')
 
 print('\nApplying UMAP for dimension reduction of topic distribution...')
 doc_topic_distribution = document_topics.copy().iloc[:, 2:]
 toolkit.apply_umap_model(values=doc_topic_distribution, id_header='event_id',
                          identifiers=identifiers, n_components=2,
-                         save_as='umap-event-topic-distribution')
+                         save_as='lda_topics_events/umap-event-topic-distribution')
 
 print('\nDone!')
